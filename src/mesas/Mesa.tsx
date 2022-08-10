@@ -1,4 +1,16 @@
 import React, { Component } from 'react';
+import {
+  Avatar,
+  Button,
+  Card,
+  CardContent,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from '@mui/material';
+import { Person } from '@mui/icons-material';
 
 export type MesaProps = { id: string; nome: string; participantes: string[] };
 
@@ -6,16 +18,34 @@ export class Mesa extends Component<MesaProps> {
   render() {
     const mesa = this.props;
     return (
-      <div>
-        <h2>
-          {mesa.id} - {mesa.nome}
-        </h2>
-        <ul>
-          {mesa.participantes.map((nome) => (
-            <li>{nome}</li>
-          ))}
-        </ul>
-      </div>
+      <Card>
+        <CardContent>
+          <Typography variant='h5' component='span'>
+            {mesa.nome}
+          </Typography>
+          <List>
+            {mesa.participantes.map((nome) => (
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <Person />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText>{nome}</ListItemText>
+              </ListItem>
+            ))}
+          </List>
+          <Button
+            size='small'
+            variant='outlined'
+            sx={{
+              width: '100%',
+            }}
+          >
+            Participar
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 }

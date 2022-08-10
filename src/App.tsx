@@ -1,15 +1,27 @@
+import { Add } from '@mui/icons-material';
+import { Button, Typography, Box, Container } from '@mui/material';
 import './App.css';
 import { Mesas } from './mesas/Mesas';
 
 function App() {
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Mesas Disponíveis</h1>
+    <Container maxWidth='sm'>
+      <Box sx={{ my: 4 }}>
+        <Typography variant='h4' component='h1' gutterBottom>
+          Mesas Disponíveis
+        </Typography>
         <Mesas />
-      </header>
-    </div>
+        <Box sx={{
+          paddingTop: '10px',
+        }}>
+          <Button variant='contained' startIcon={<Add />} sx={{
+            width: '100%'
+          }}>
+            Criar Mesa
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 }
 
