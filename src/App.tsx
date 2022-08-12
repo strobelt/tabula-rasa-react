@@ -1,28 +1,17 @@
-import { Add } from '@mui/icons-material';
-import { Button, Typography, Box, Container } from '@mui/material';
+import React from 'react';
+import { Box, Container } from '@mui/material';
 import './App.css';
 import { Mesas } from './mesas/Mesas';
+import { MesaDb } from './mesas/MesaDb';
 
-function App() {
-  return (
-    <Container maxWidth='sm'>
-      <Box sx={{ my: 4 }}>
-        <Typography variant='h4' component='h1' gutterBottom>
-          Mesas Disponíveis
-        </Typography>
-        <Mesas />
-        <Box sx={{
-          paddingTop: '10px',
-        }}>
-          <Button variant='contained' startIcon={<Add />} sx={{
-            width: '100%'
-          }}>
-            Criar Mesa
-          </Button>
+export class App extends React.Component {
+  render() {
+    return (
+      <Container maxWidth='sm'>
+        <Box sx={{ my: 4 }}>
+          <Mesas />
         </Box>
-      </Box>
-    </Container>
-  );
+      </Container>
+    );
+  }
 }
-
-export default App;

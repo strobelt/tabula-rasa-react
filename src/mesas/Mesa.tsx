@@ -11,8 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Person } from '@mui/icons-material';
-
-export type MesaProps = { id: string; nome: string; participantes: string[] };
+import { MesaProps } from './MesaProps';
 
 export class Mesa extends Component<MesaProps> {
   render() {
@@ -24,8 +23,8 @@ export class Mesa extends Component<MesaProps> {
             {mesa.nome}
           </Typography>
           <List>
-            {mesa.participantes.map((nome) => (
-              <ListItem>
+            {mesa.participantes?.map((nome) => (
+              <ListItem key={nome}>
                 <ListItemAvatar>
                   <Avatar>
                     <Person />

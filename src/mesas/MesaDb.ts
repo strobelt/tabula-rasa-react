@@ -1,6 +1,11 @@
 import { initializeApp } from 'firebase/app';
-import { collection, getDocs, getFirestore } from 'firebase/firestore/lite';
-import { MesaProps } from './Mesa';
+import {
+  addDoc,
+  collection,
+  getDocs,
+  getFirestore,
+} from 'firebase/firestore/lite';
+import { MesaProps } from './MesaProps';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDx_50iBLx2qQVnaMBzewv6cg_lesIOink',
@@ -16,9 +21,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export class MesaDb {
-  async getMesas() {
-    const mesasCollection = collection(db, 'mesas');
-    const mesasDocs = await getDocs(mesasCollection);
+  mesasCollection = collection(db, 'mesas');
+
+  async buscaMesas() {
+    const mesasDocs = await getDocs(this.mesasCollection);
     return mesasDocs.docs.map(function x(doc) {
       return {
         id: doc.id,
@@ -26,5 +32,11 @@ export class MesaDb {
         participantes: doc.get('participantes'),
       } as MesaProps;
     });
+  }
+
+  async criaMesa(nome: string) {
+    return addDoc(this.mesasCollection, {
+      nome,
+    } as MesaProps);
   }
 }
