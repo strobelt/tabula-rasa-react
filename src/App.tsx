@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
 import './App.css';
-import { Mesas } from './mesas/Mesas';
-import { MesaDb } from './mesas/MesaDb';
+import { Mesas } from './tables/Tables';
 
 export class App extends React.Component {
   render() {

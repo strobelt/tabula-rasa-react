@@ -11,19 +11,19 @@ import {
   Typography,
 } from '@mui/material';
 import { Person } from '@mui/icons-material';
-import { MesaProps } from './MesaProps';
+import { TableProps } from './TableProps';
 
-export class Mesa extends Component<MesaProps> {
+export class Mesa extends Component<TableProps> {
   render() {
     const mesa = this.props;
     return (
       <Card>
         <CardContent>
           <Typography variant='h5' component='span'>
-            {mesa.nome}
+            {mesa.name}
           </Typography>
           <List>
-            {mesa.participantes?.map((nome) => (
+            {mesa.players?.map((nome) => (
               <ListItem key={nome}>
                 <ListItemAvatar>
                   <Avatar>
