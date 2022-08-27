@@ -1,14 +1,14 @@
 import React from 'react';
-import { Mesa } from './Table';
+import { TableCard } from './TableCard';
 import { Card, Stack, Skeleton, Box, Typography } from '@mui/material';
 import { TableDb } from './TableDb';
-import { TableProps } from './TableProps';
+import { Table } from './Table';
 import { NewTableForm } from './NewTableForm';
 
-export class Mesas extends React.Component<
+export class Tables extends React.Component<
   {},
   {
-    tables: TableProps[];
+    tables: Table[];
     loaded: boolean;
   }
 > {
@@ -41,7 +41,13 @@ export class Mesas extends React.Component<
         </Typography>
         <Stack spacing={2}>
           {this.state.loaded
-            ? this.state.tables.map((mesa) => <Mesa {...mesa} key={mesa.id} />)
+            ? this.state.tables.map((mesa) => (
+                <TableCard
+                  {...mesa}
+                  afterJoin={() => this.loadTables()}
+                  key={mesa.id}
+                />
+              ))
             : Array.from({ length: 2 }).map((_) => (
                 <Card>
                   <Skeleton
