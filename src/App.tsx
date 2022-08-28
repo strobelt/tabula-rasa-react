@@ -5,6 +5,8 @@ import {
   Container,
   createTheme,
   CssBaseline,
+  IconButton,
+  Theme,
   ThemeProvider,
   Toolbar,
   Typography,
@@ -14,27 +16,40 @@ import './App.css';
 import { LoginDialog } from './tables/LoginDialog';
 import { Tables } from './tables/Tables';
 import { UserMenu } from './tables/UserMenu';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 export class App extends React.Component<
   {},
   {
     openLogin: boolean;
     userName: string;
+    theme: Theme;
   }
 > {
-  darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
-
   constructor(props: any) {
     super(props);
     this.state = {
       openLogin: false,
       userName: localStorage.getItem('userName') as string,
+      theme: createTheme({
+        palette: {
+          mode: 'dark' || localStorage.getItem('themeMode'),
+        },
+      }),
     };
   }
+
+  toggleColorMode = () => {
+    this.setState({
+      theme: createTheme({
+        palette: {
+          mode: this.state.theme.palette.mode === 'dark' ? 'light' : 'dark',
+        },
+      }),
+    });
+    localStorage.setItem('themeMode', this.state.theme.palette.mode);
+  };
 
   closeLogin = () => {
     this.setState({ openLogin: false });
@@ -52,7 +67,7 @@ export class App extends React.Component<
 
   render() {
     return (
-      <ThemeProvider theme={this.darkTheme}>
+      <ThemeProvider theme={this.state.theme}>
         <CssBaseline />
         <Box>
           <AppBar position='sticky'>
@@ -60,6 +75,17 @@ export class App extends React.Component<
               <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
                 Tabula Rasa
               </Typography>
+              <IconButton
+                sx={{ ml: 1 }}
+                onClick={this.toggleColorMode}
+                color='inherit'
+              >
+                {this.state.theme.palette.mode === 'dark' ? (
+                  <Brightness7Icon />
+                ) : (
+                  <Brightness4Icon />
+                )}
+              </IconButton>
               {this.state.userName ? (
                 <UserMenu
                   userName={this.state.userName}
