@@ -134,17 +134,15 @@ export class NewTableForm extends React.Component<
               autoComplete='off'
               onSubmit={this.handleSubmit}
             >
-              <div>
-                <TextField
-                  required
-                  id='nome'
-                  error={this.state.hasError}
-                  helperText={this.state.errorMessage}
-                  label='Nome da Mesa'
-                  value={this.state.tableName}
-                  onChange={this.handleChange}
-                />
-              </div>
+              <TextField
+                required
+                id='nome'
+                error={this.state.hasError}
+                helperText={this.state.errorMessage}
+                label='Nome da Mesa'
+                value={this.state.tableName}
+                onChange={this.handleChange}
+              />
               <Button
                 type='submit'
                 variant='contained'

@@ -1,11 +1,15 @@
 import { initializeApp } from 'firebase/app';
 import {
   addDoc,
+  arrayRemove,
+  arrayUnion,
   collection,
+  DocumentReference,
   getDocs,
   getFirestore,
+  updateDoc,
 } from 'firebase/firestore/lite';
-import { TableProps } from './TableProps';
+import { Table } from './Table';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDx_50iBLx2qQVnaMBzewv6cg_lesIOink',
@@ -26,12 +30,13 @@ export class TableDb {
   async getTables() {
     const mesasDocs = await getDocs(this.tableCollection);
     return mesasDocs.docs
-      .map(function x(doc) {
+      .map((doc) => {
         return {
           id: doc.id,
           name: doc.get('name'),
           players: doc.get('players'),
-        } as TableProps;
+          reference: doc.ref,
+        } as Table;
       })
       .sort((a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0));
   }
@@ -39,6 +44,18 @@ export class TableDb {
   async createTable(name: string) {
     return addDoc(this.tableCollection, {
       name: name,
-    } as TableProps);
+    } as Table);
+  }
+
+  async joinTable(tableRef: DocumentReference, player: string) {
+    return updateDoc(tableRef, {
+      players: arrayUnion(player),
+    });
+  }
+
+  async leaveTable(tableRef: DocumentReference, player: string) {
+    return updateDoc(tableRef, {
+      players: arrayRemove(player),
+    });
   }
 }
