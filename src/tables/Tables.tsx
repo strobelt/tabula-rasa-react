@@ -6,7 +6,9 @@ import { Table } from './Table';
 import { NewTableForm } from './NewTableForm';
 
 export class Tables extends React.Component<
-  {},
+  {
+    loggedInUser: string;
+  },
   {
     tables: Table[];
     loaded: boolean;
@@ -35,7 +37,7 @@ export class Tables extends React.Component<
 
   render() {
     return (
-      <Box>
+      <div key={this.props.loggedInUser}>
         <Typography variant='h4' component='h1' gutterBottom>
           Mesas Disponíveis
         </Typography>
@@ -44,7 +46,9 @@ export class Tables extends React.Component<
             ? this.state.tables.map((mesa) => (
                 <TableCard
                   {...mesa}
-                  afterJoin={() => this.loadTables()}
+                  loggedInUser={this.props.loggedInUser}
+                  afterJoin={this.loadTables}
+                  afterLeave={this.loadTables}
                   key={mesa.id}
                 />
               ))
@@ -58,8 +62,8 @@ export class Tables extends React.Component<
                 </Card>
               ))}
         </Stack>
-        <NewTableForm onCreate={() => this.loadTables()} />
-      </Box>
+        {this.props.loggedInUser && <NewTableForm onCreate={this.loadTables} />}
+      </div>
     );
   }
 }

@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
   DocumentReference,
@@ -49,6 +50,12 @@ export class TableDb {
   async joinTable(tableRef: DocumentReference, player: string) {
     return updateDoc(tableRef, {
       players: arrayUnion(player),
+    });
+  }
+
+  async leaveTable(tableRef: DocumentReference, player: string) {
+    return updateDoc(tableRef, {
+      players: arrayRemove(player),
     });
   }
 }

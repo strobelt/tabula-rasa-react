@@ -1,4 +1,5 @@
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Person } from '@mui/icons-material';
+import { Avatar, Button, Menu, MenuItem, Typography } from '@mui/material';
 import React from 'react';
 
 export class UserMenu extends React.Component<
@@ -20,13 +21,11 @@ export class UserMenu extends React.Component<
   }
 
   openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-    this.setState({ anchorEl: event.currentTarget });
-    this.setState({ open: true });
+    this.setState({ anchorEl: event.currentTarget, open: true });
   };
 
   closeMenu = () => {
-    this.setState({ anchorEl: null });
-    this.setState({ open: false });
+    this.setState({ anchorEl: null, open: false });
   };
 
   logOut = () => {
@@ -45,7 +44,22 @@ export class UserMenu extends React.Component<
           aria-expanded={this.state.open ? 'true' : undefined}
           onClick={this.openMenu}
         >
-          Oi, {this.props.userName}
+          <Avatar
+            variant='rounded'
+            sx={{
+              width: 24,
+              height: 24,
+            }}
+          >
+            <Person fontSize='small' />
+          </Avatar>
+          <Typography
+            sx={{
+              pl: 1,
+            }}
+          >
+            {this.props.userName}
+          </Typography>
         </Button>
         <Menu
           id='logged-menu'

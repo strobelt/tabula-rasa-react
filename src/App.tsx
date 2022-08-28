@@ -3,6 +3,9 @@ import {
   Box,
   Button,
   Container,
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
   Toolbar,
   Typography,
 } from '@mui/material';
@@ -19,6 +22,12 @@ export class App extends React.Component<
     userName: string;
   }
 > {
+  darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -43,38 +52,41 @@ export class App extends React.Component<
 
   render() {
     return (
-      <Box>
-        <AppBar position='static'>
-          <Toolbar>
-            <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-              Tabula Rasa
-            </Typography>
-            {this.state.userName ? (
-              <UserMenu
-                userName={this.state.userName}
-                onLogoutClick={this.logOut}
-              />
-            ) : (
-              <Button
-                color='inherit'
-                onClick={() => this.setState({ openLogin: true })}
-              >
-                Login
-              </Button>
-            )}
-          </Toolbar>
-        </AppBar>
-        <Container>
-          <LoginDialog
-            open={this.state.openLogin}
-            onClose={this.closeLogin}
-            onSetLogin={this.setLogin}
-          />
-          <Box sx={{ my: 4 }}>
-            <Tables />
-          </Box>
-        </Container>
-      </Box>
+      <ThemeProvider theme={this.darkTheme}>
+        <CssBaseline />
+        <Box>
+          <AppBar position='sticky'>
+            <Toolbar>
+              <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+                Tabula Rasa
+              </Typography>
+              {this.state.userName ? (
+                <UserMenu
+                  userName={this.state.userName}
+                  onLogoutClick={this.logOut}
+                />
+              ) : (
+                <Button
+                  color='inherit'
+                  onClick={() => this.setState({ openLogin: true })}
+                >
+                  Login
+                </Button>
+              )}
+            </Toolbar>
+          </AppBar>
+          <Container>
+            <LoginDialog
+              open={this.state.openLogin}
+              onClose={this.closeLogin}
+              onSetLogin={this.setLogin}
+            />
+            <Box sx={{ my: 4 }}>
+              <Tables loggedInUser={this.state.userName} />
+            </Box>
+          </Container>
+        </Box>
+      </ThemeProvider>
     );
   }
 }
